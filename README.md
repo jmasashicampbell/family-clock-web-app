@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# Family Clock Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive web application that helps families keep track of each member's location or status. Built with React and designed to be deployed on GitHub Pages.
+
+## Features
+
+- Individual timezone clocks for each family member
+- Interactive world map for location selection
+- Color-coded family member cards
+- Offline timezone detection based on map location using tz-lookup
+- User authentication with Supabase
+- Email/password login (sign-in only)
+- Clean, minimalist interface
+- Responsive design for mobile and desktop
+- Easy deployment to GitHub Pages
+
+## Screenshots
+
+*Add screenshots of your application here after deployment*
+
+## Installation and Setup
+
+1. Clone the repository
+   ```
+   git clone https://github.com/yourusername/FamilyClockWebApp.git
+   cd FamilyClockWebApp
+   ```
+
+2. Install dependencies
+   ```
+   npm install
+   ```
+
+3. Configure Supabase
+   - Create a `.env` file in the root directory
+   - Add your Supabase URL and anon key:
+   ```
+   REACT_APP_SUPABASE_URL=your_supabase_url
+   REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+4. Start the development server
+   ```
+   npm start
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+## Deployment
+
+This app is configured for easy deployment to GitHub Pages.
+
+1. Update the `homepage` field in `package.json` with your GitHub username:
+   ```json
+   "homepage": "https://yourusername.github.io/FamilyClockWebApp"
+   ```
+
+2. Deploy the app to GitHub Pages:
+   ```
+   npm run deploy
+   ```
 
 ## Available Scripts
 
-In the project directory, you can run:
+- `npm start` - Runs the app in development mode
+- `npm test` - Launches the test runner
+- `npm run build` - Builds the app for production
+- `npm run eject` - Ejects from Create React App
+- `npm run predeploy` - Builds the app before deployment
+- `npm run deploy` - Deploys the app to GitHub Pages
 
-### `npm start`
+## Customization
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Adding Family Members
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To add or modify family members, edit the `familyMembers` state in `App.js`:
 
-### `npm test`
+```jsx
+const [familyMembers, setFamilyMembers] = useState([
+  { 
+    id: 1, 
+    name: 'Mom', 
+    color: '#FF6B6B', 
+    timezone: 'America/New_York', 
+    location: 'New York',
+    coordinates: [40.7128, -74.0060] 
+  },
+  { 
+    id: 2, 
+    name: 'Dad', 
+    color: '#4ECDC4', 
+    timezone: 'Europe/London', 
+    location: 'London',
+    coordinates: [51.5074, -0.1278] 
+  },
+  // Add more family members here
+]);
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Setting Locations with the World Map
 
-### `npm run build`
+Each family member's location can be set using an interactive world map. When you click the "Change Location" button, a modal opens with a map where you can place a pin to indicate the family member's location.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The app uses the `tz-lookup` Node module to determine the appropriate timezone based on the selected coordinates, without requiring any external API calls. The location data structure includes:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```jsx
+{
+  timezone: 'America/New_York',  // IANA timezone identifier
+  location: 'New York',          // Location name
+  coordinates: [40.7128, -74.0060]  // [latitude, longitude]
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To customize the initial locations, edit the `familyMembers` state in `App.js`.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Future Enhancements
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Persistent storage of family members in Supabase
+- Real-time location tracking integration
+- Family member avatars
+- Push notifications
+- Enhanced location name detection
+- Travel planning features with timezone difference calculations
+- User roles and sharing capabilities
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## License
 
-## Learn More
+MIT
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Acknowledgements
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [React](https://reactjs.org/)
+- [Create React App](https://github.com/facebook/create-react-app)
+- [GitHub Pages](https://pages.github.com/)

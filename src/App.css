@@ -1,38 +1,340 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-top: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+
+
+.family-status {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  color: #333;
+  font-weight: 700;
+  font-size: 2.5rem;
+  position: relative;
+}
+
+.app-header h1:after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+  bottom: -10px;
+  left: 0;
+  border-radius: 2px;
+}
+
+.sign-out-button {
+  background: none;
+  border: 2px solid #6a11cb;
+  color: #6a11cb;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.sign-out-button:hover {
+  background-color: rgba(106, 17, 203, 0.1);
+}
+
+.family-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.member-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 5px solid;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.member-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.member-name {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.member-clock {
+  margin-bottom: 1rem;
+  padding: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.member-clock:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.member-clock .time {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 0.2rem;
+}
+
+.member-clock .location {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+.timezone-selector select {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 5px;
+  border: 2px solid;
+  background-color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.timezone-selector select:focus {
+  box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+.location-selector {
+  margin-bottom: 1rem;
+}
+
+.map-button {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 5px;
+  border: 2px solid;
+  background-color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.map-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.map-button:active {
+  transform: translateY(1px);
+}
+
+.location-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .family-members {
+    grid-template-columns: 1fr;
+  }
+  
+  .clock {
+    font-size: 2.5rem;
+  }
+  
+  .App-header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.map-container {
+  padding: 1rem;
+}
+
+.instructions {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #eee;
+  gap: 10px;
+}
+
+.cancel-button, .save-button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-button {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  color: #666;
+}
+
+.cancel-button:hover {
+  background-color: #eee;
+}
+
+.save-button {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  border: none;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.save-button:hover {
+  opacity: 0.9;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading, error, and empty states */
+.loading-state,
+.error-state,
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.loading-state {
+  color: #6a11cb;
+}
+
+.error-state {
+  color: #e74c3c;
+  border-left: 4px solid #e74c3c;
+}
+
+.empty-state {
+  color: #7f8c8d;
+  font-style: italic;
 }

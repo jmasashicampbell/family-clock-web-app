@@ -1,23 +1,201 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+import { formatInTimeZone } from 'date-fns-tz';
+import WorldMapModal from './components/WorldMapModal';
+import Auth from './components/Auth';
+import { supabase } from './supabaseClient';
+import tzlookup from 'tz-lookup';
 import './App.css';
 
 function App() {
+  const [session, setSession] = useState(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [familyMembers, setFamilyMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  const [activeModal, setActiveModal] = useState(null);
+
+  // Fetch family members from Supabase
+  const fetchFamilyMembers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const { data, error } = await supabase
+        .from('person')
+        .select('*')
+        .eq('family', 'Swenson');
+      
+      if (error) throw error;
+      
+      if (data) {
+        // Map the data to include timezone and color
+        const colors = ['#FF6B6B', '#4ECDC4', '#FFD166', '#6A0572', '#1A535C', '#F78C6B', '#05C3DD'];
+        
+        const formattedData = data.map((person, index) => {
+          // Use tzlookup to determine timezone from coordinates
+          const timezone = tzlookup(person.latitude, person.longitude);
+          
+          // Get location name from timezone
+          const locationParts = timezone.split('/');
+          const location = locationParts.length > 1 
+            ? locationParts[locationParts.length - 1].replace(/_/g, ' ')
+            : 'Unknown';
+          
+          return {
+            id: person.id,
+            name: person.name,
+            color: colors[index % colors.length],
+            timezone: timezone,
+            location: location,
+            coordinates: [person.latitude, person.longitude]
+          };
+        });
+        
+        setFamilyMembers(formattedData);
+      }
+    } catch (error) {
+      console.error('Error fetching family members:', error);
+      setError('Failed to load family members');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Set up Supabase auth state listener
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session) {
+        fetchFamilyMembers();
+      }
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session) {
+        fetchFamilyMembers();
+      }
+    });
+
+    // Set up timer for clock updates
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => {
+      subscription?.unsubscribe();
+      clearInterval(timer);
+    };
+  }, []);
+
+  const updateLocation = async (id, locationData) => {
+    try {
+      // Update the member in the state first for immediate UI feedback
+      setFamilyMembers(familyMembers.map(member => 
+        member.id === id ? { 
+          ...member, 
+          timezone: locationData.timezone, 
+          location: locationData.location,
+          coordinates: locationData.coordinates 
+        } : member
+      ));
+      
+      // Then update the database
+      const { error } = await supabase
+        .from('person')
+        .update({ 
+          latitude: locationData.coordinates[0],
+          longitude: locationData.coordinates[1]
+        })
+        .eq('id', id);
+      
+      if (error) {
+        console.error('Error updating location:', error);
+        // Revert to original data if there's an error
+        fetchFamilyMembers();
+      }
+    } catch (error) {
+      console.error('Error in update process:', error);
+      fetchFamilyMembers();
+    }
+  };
+  
+  const getTimeInTimezone = (timezone) => {
+    try {
+      return formatInTimeZone(currentTime, timezone, 'h:mm a');
+    } catch (error) {
+      console.error('Error formatting time for timezone:', timezone, error);
+      return 'Invalid timezone';
+    }
+  };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+  };
+
+  // If user is not authenticated, show the Auth component
+  if (!session) {
+    return <Auth />;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="app-header">
+        <h1>Family Clock</h1>
+        <button className="sign-out-button" onClick={handleSignOut}>
+          Sign Out
+        </button>
       </header>
+      <main className="family-status">
+        {loading ? (
+          <div className="loading-state">Loading family members...</div>
+        ) : error ? (
+          <div className="error-state">{error}</div>
+        ) : familyMembers.length === 0 ? (
+          <div className="empty-state">No family members found</div>
+        ) : (
+          <div className="family-members">
+            {familyMembers.map(member => (
+              <div key={member.id} className="member-card" style={{ borderColor: member.color }}>
+                <div className="member-name" style={{ backgroundColor: member.color }}>
+                  {member.name}
+                </div>
+                <div className="member-clock">
+                  <div className="time">{getTimeInTimezone(member.timezone)}</div>
+                  <div className="location">{member.location}</div>
+                </div>
+                <div className="location-selector">
+                  <button 
+                    className="map-button" 
+                    onClick={() => setActiveModal(member.id)}
+                    style={{ borderColor: member.color }}
+                  >
+                    <span className="location-icon">📍</span>
+                    Change Location
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </main>
+
+      <footer>
+        <p>Family Clock Web App - {new Date().getFullYear()}</p>
+      </footer>
+      
+      {/* World Map Modal */}
+      {activeModal !== null && (
+        <WorldMapModal
+          isOpen={activeModal !== null}
+          onClose={() => setActiveModal(null)}
+          onSave={(locationData) => updateLocation(activeModal, locationData)}
+          initialPosition={familyMembers.find(m => m.id === activeModal)?.coordinates || [0, 0]}
+        />
+      )}
     </div>
   );
 }
