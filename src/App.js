@@ -21,10 +21,47 @@ function App() {
       setLoading(true);
       setError(null);
       
+      // First, get the current user's information
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      
+      if (userError) throw userError;
+      
+      if (!userData || !userData.user) {
+        throw new Error('User not found');
+      }
+      
+      const currentUserId = userData.user.id;
+      
+      // Get the current user's family
+      const { data: currentUserData, error: currentUserError } = await supabase
+        .from('person')
+        .select('family')
+        .eq('user_id', currentUserId)
+        .single();
+      
+      if (currentUserError) {
+        // If there's an error finding the user, show a specific message
+        if (currentUserError.code === 'PGRST116') {
+          setError('Your user profile is not set up. Please contact an administrator.');
+          setLoading(false);
+          return;
+        }
+        throw currentUserError;
+      }
+      
+      if (!currentUserData || !currentUserData.family) {
+        setError('No family associated with your account');
+        setLoading(false);
+        return;
+      }
+      
+      const userFamily = currentUserData.family;
+      
+      // Now get all family members with the same family value
       const { data, error } = await supabase
         .from('person')
         .select('*')
-        .eq('family', 'Swenson');
+        .eq('family', userFamily);
       
       if (error) throw error;
       
