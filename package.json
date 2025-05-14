@@ -2,7 +2,7 @@
   "name": "family-clock-web-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jcampbell.github.io/FamilyClockWebApp",
+  "homepage": "https://jmasashicampbell.github.io/family-clock-web-app",
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
     "@testing-library/dom": "^10.4.0",
