@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { formatInTimeZone } from 'date-fns-tz';
 import WorldMapModal from './components/WorldMapModal';
 import Auth from './components/Auth';
+import AnalogClock from './components/AnalogClock';
 import { supabase } from './supabaseClient';
 import tzlookup from 'tz-lookup';
 import './App.css';
@@ -10,6 +11,7 @@ function App() {
   const [session, setSession] = useState(null);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [familyMembers, setFamilyMembers] = useState([]);
+  const [familyName, setFamilyName] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -56,6 +58,9 @@ function App() {
       }
       
       const userFamily = currentUserData.family;
+      
+      // Set the family name (capitalize first letter)
+      setFamilyName(userFamily.charAt(0).toUpperCase() + userFamily.slice(1));
       
       // Now get all family members with the same family value
       const { data, error } = await supabase
@@ -181,10 +186,12 @@ function App() {
   return (
     <div className="App">
       <header className="app-header">
-        <h1>Family Clock</h1>
-        <button className="sign-out-button" onClick={handleSignOut}>
-          Sign Out
-        </button>
+        <div className="header-content">
+          <h1 className="family-title">{familyName} Family</h1>
+          <button className="sign-out-button" onClick={handleSignOut}>
+            Sign Out
+          </button>
+        </div>
       </header>
       <main className="family-status">
         {loading ? (
@@ -196,23 +203,9 @@ function App() {
         ) : (
           <div className="family-members">
             {familyMembers.map(member => (
-              <div key={member.id} className="member-card" style={{ borderColor: member.color }}>
-                <div className="member-name" style={{ backgroundColor: member.color }}>
-                  {member.name}
-                </div>
-                <div className="member-clock">
-                  <div className="time">{getTimeInTimezone(member.timezone)}</div>
-                  <div className="location">{member.location}</div>
-                </div>
-                <div className="location-selector">
-                  <button 
-                    className="map-button" 
-                    onClick={() => setActiveModal(member.id)}
-                    style={{ borderColor: member.color }}
-                  >
-                    <span className="location-icon">📍</span>
-                    Change Location
-                  </button>
+              <div key={member.id} className="member-card">
+                <div className="member-clock" onClick={() => setActiveModal(member.id)}>
+                  <AnalogClock time={getTimeInTimezone(member.timezone)} name={member.name} />
                 </div>
               </div>
             ))}
@@ -221,7 +214,7 @@ function App() {
       </main>
 
       <footer>
-        <p>Family Clock Web App - {new Date().getFullYear()}</p>
+        <p>Family Clock - {new Date().getFullYear()}</p>
       </footer>
       
       {/* World Map Modal */}

@@ -5,10 +5,10 @@
 }
 
 body {
-  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-family: 'PT Serif', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fa;
+  background-color: #f9f7f0;
   color: #333;
 }
 
@@ -18,7 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #f9f7f0;
 }
 
 
@@ -33,45 +33,63 @@ body {
 
 .app-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 1.5rem 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
 }
 
-.app-header h1 {
-  margin: 0;
-  color: #333;
-  font-weight: 700;
-  font-size: 2.5rem;
+.header-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
 }
 
-.app-header h1:after {
+.family-title {
+  margin: 0;
+  color: #333;
+  font-weight: 700;
+  font-size: 3rem;
+  position: relative;
+  font-family: 'PT Serif', Georgia, serif;
+  text-align: center;
+  width: auto;
+  display: inline-block;
+}
+
+.family-title:after {
   content: '';
   position: absolute;
-  width: 100px;
-  height: 4px;
-  background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+  width: 90%;
+  height: 2px;
+  background: #333;
   bottom: -10px;
-  left: 0;
-  border-radius: 2px;
+  left: 5%;
+  border-radius: 1px;
 }
 
 .sign-out-button {
   background: none;
-  border: 2px solid #6a11cb;
-  color: #6a11cb;
+  border: 1px solid #333;
+  color: #333;
   padding: 0.6rem 1.2rem;
-  border-radius: 5px;
-  font-size: 1rem;
+  border-radius: 3px;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-weight: 500;
+  font-weight: 400;
+  position: absolute;
+  right: 0;
+  font-family: 'PT Serif', Georgia, serif;
+  letter-spacing: 0.5px;
 }
 
 .sign-out-button:hover {
-  background-color: rgba(106, 17, 203, 0.1);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .family-members {
@@ -83,23 +101,16 @@ body {
 }
 
 .member-card {
-  background-color: white;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-top: 5px solid;
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 320px;
   flex-grow: 0;
   flex-shrink: 0;
+  align-items: center;
+  margin: 0.25rem;
 }
 
-.member-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
+/* Card hover effect removed */
 
 .member-name {
   margin-bottom: 1rem;
@@ -112,23 +123,24 @@ body {
 }
 
 .member-clock {
-  margin-bottom: 1rem;
-  padding: 1.2rem;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  padding: 0;
+  background-color: transparent;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
 }
 
-.member-clock:hover {
-  background-color: rgba(0, 0, 0, 0.06);
-}
+/* Removed hover effect for member-clock */
 
-.member-clock .time {
+/* Digital clock time is now replaced by analog clock */
+/* .member-clock .time {
   font-size: 2rem;
   font-weight: 300;
   margin-bottom: 0.2rem;
-}
+} */
 
 .member-clock .location {
   font-size: 0.9rem;
@@ -153,43 +165,15 @@ body {
 }
 
 footer {
-  background-color: #333;
-  color: white;
+  background-color: #656565;
+  color: #9f9f9f;
   padding: 1rem;
   margin-top: auto;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
-.location-selector {
-  margin-bottom: 1rem;
-}
-
-.map-button {
-  width: 100%;
-  padding: 0.8rem;
-  border-radius: 5px;
-  border: 2px solid;
-  background-color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.map-button:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-
-.map-button:active {
-  transform: translateY(1px);
-}
-
-.location-icon {
-  margin-right: 8px;
-  font-size: 1.2rem;
-}
+/* Location selector styles removed - entire clock is now clickable */
 
 @media (max-width: 768px) {
   .family-members {

@@ -1,0 +1,135 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #f9f7f0;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e0ddd5;
+  position: relative;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: #333;
+  font-family: 'PT Serif', Georgia, serif;
+  font-weight: 700;
+  position: relative;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #333;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  position: absolute;
+  right: 2rem;
+  top: 1.5rem;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+.map-container {
+  padding: 1.5rem;
+}
+
+.instructions {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f2f0e6;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  color: #333;
+  text-align: center;
+  font-family: 'PT Serif', Georgia, serif;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #e0ddd5;
+  gap: 1rem;
+}
+
+.cancel-button, .save-button {
+  padding: 0.6rem 1.5rem;
+  border-radius: 3px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'PT Serif', Georgia, serif;
+  letter-spacing: 0.5px;
+}
+
+.cancel-button {
+  background-color: transparent;
+  border: 1px solid #333;
+  color: #333;
+}
+
+.cancel-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.modal-footer .save-button {
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 2px solid #333 !important;
+  color: #333 !important;
+  font-weight: 700 !important;
+}
+
+.modal-footer .save-button:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  opacity: 1 !important;
+}
+
+.modal-footer .save-button:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+/* Custom marker style */
+.leaflet-marker-icon {
+  filter: hue-rotate(180deg);
+}
+
+/* Map container style */
+.leaflet-container {
+  border-radius: 5px;
+  border: 1px solid #e0ddd5;
+}

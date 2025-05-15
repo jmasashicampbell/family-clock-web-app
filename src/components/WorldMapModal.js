@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import tzlookup from 'tz-lookup';
+import '../styles/WorldMapModal.css';
 
 // Fix for Leaflet marker icon issue in React
 delete L.Icon.Default.prototype._getIconUrl;
@@ -228,7 +229,7 @@ function WorldMapModal({ isOpen, onClose, onSave, initialPosition }) {
           </MapContainer>
           
           <div className="instructions">
-            Click on the map to place a pin where the family member is located.
+            Click on the map to place a pin where the family member is located
           </div>
         </div>
         
