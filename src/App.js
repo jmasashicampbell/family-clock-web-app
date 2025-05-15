@@ -62,11 +62,12 @@ function App() {
       // Set the family name (capitalize first letter)
       setFamilyName(userFamily.charAt(0).toUpperCase() + userFamily.slice(1));
       
-      // Now get all family members with the same family value
+      // Now get all family members with the same family value, sorted by family_order
       const { data, error } = await supabase
         .from('person')
         .select('*')
-        .eq('family', userFamily);
+        .eq('family', userFamily)
+        .order('family_order', { ascending: true });
       
       if (error) throw error;
       
