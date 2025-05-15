@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/family-clock-web-app/static/css/main.7f856eb4.css",
-    "main.js": "/family-clock-web-app/static/js/main.e4a80b5b.js",
+    "main.css": "/family-clock-web-app/static/css/main.e40e90fe.css",
+    "main.js": "/family-clock-web-app/static/js/main.02e7c739.js",
     "static/js/952.8783c665.chunk.js": "/family-clock-web-app/static/js/952.8783c665.chunk.js",
     "static/js/453.086587b6.chunk.js": "/family-clock-web-app/static/js/453.086587b6.chunk.js",
     "index.html": "/family-clock-web-app/index.html",
-    "main.7f856eb4.css.map": "/family-clock-web-app/static/css/main.7f856eb4.css.map",
-    "main.e4a80b5b.js.map": "/family-clock-web-app/static/js/main.e4a80b5b.js.map",
+    "main.e40e90fe.css.map": "/family-clock-web-app/static/css/main.e40e90fe.css.map",
+    "main.02e7c739.js.map": "/family-clock-web-app/static/js/main.02e7c739.js.map",
     "952.8783c665.chunk.js.map": "/family-clock-web-app/static/js/952.8783c665.chunk.js.map",
     "453.086587b6.chunk.js.map": "/family-clock-web-app/static/js/453.086587b6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7f856eb4.css",
-    "static/js/main.e4a80b5b.js"
+    "static/css/main.e40e90fe.css",
+    "static/js/main.02e7c739.js"
   ]
 }
