@@ -104,21 +104,29 @@ function App() {
     }
   };
 
+  // Track if initial data has been loaded
+  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
+
   useEffect(() => {
     // Set up Supabase auth state listener
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
-      if (session) {
+      if (session && !initialDataLoaded) {
         fetchFamilyMembers();
+        setInitialDataLoaded(true);
       }
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      const isNewLogin = !session;
       setSession(session);
-      if (session) {
+      
+      // Only fetch family members on new login or if data hasn't been loaded yet
+      if (session && (!initialDataLoaded || isNewLogin)) {
         fetchFamilyMembers();
+        setInitialDataLoaded(true);
       }
     });
 
@@ -131,7 +139,7 @@ function App() {
       subscription?.unsubscribe();
       clearInterval(timer);
     };
-  }, []);
+  }, [initialDataLoaded]);
 
   const updateLocation = async (id, locationData) => {
     try {
