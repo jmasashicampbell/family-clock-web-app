@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/family-clock-web-app/static/css/main.4f030876.css",
-    "main.js": "/family-clock-web-app/static/js/main.02e7c739.js",
+    "main.js": "/family-clock-web-app/static/js/main.0f3e8a2a.js",
     "static/js/952.8783c665.chunk.js": "/family-clock-web-app/static/js/952.8783c665.chunk.js",
     "static/js/453.086587b6.chunk.js": "/family-clock-web-app/static/js/453.086587b6.chunk.js",
     "index.html": "/family-clock-web-app/index.html",
     "main.4f030876.css.map": "/family-clock-web-app/static/css/main.4f030876.css.map",
-    "main.02e7c739.js.map": "/family-clock-web-app/static/js/main.02e7c739.js.map",
+    "main.0f3e8a2a.js.map": "/family-clock-web-app/static/js/main.0f3e8a2a.js.map",
     "952.8783c665.chunk.js.map": "/family-clock-web-app/static/js/952.8783c665.chunk.js.map",
     "453.086587b6.chunk.js.map": "/family-clock-web-app/static/js/453.086587b6.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4f030876.css",
-    "static/js/main.02e7c739.js"
+    "static/js/main.0f3e8a2a.js"
   ]
 }
