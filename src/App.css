@@ -8,7 +8,7 @@ body {
   font-family: 'PT Serif', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f9f7f0;
+  background-color: #ece7d6;
   color: #333;
 }
 
@@ -18,7 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
-  background: #f9f7f0;
+  background: #ece7d6;
 }
 
 
